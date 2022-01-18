@@ -1,6 +1,7 @@
 var jwt = require("jsonwebtoken");
 
 const { secret } = require("../config");
+const { siswa } = require("../db");
 const db = require("../db");
 
 function tokenForUser(user) {
@@ -41,3 +42,11 @@ exports.signup = async (req, res, next) => {
 
   return res.json({ token: tokenForUser(user) });
 };
+
+// exports.read = async (req, res, next) => {
+//   const user = await db.user.findMany({
+//     include: { user: true },
+//   });
+
+//   console.log(user);
+// };

@@ -14,8 +14,30 @@ generator client {
 
 model User {
   id       String  @id @default(uuid())
-  email    String  @unique
+  email    String  
   password String
+}
+
+model Siswa {
+  id                    Int     @id @default(autoincrement())
+  id_user               String
+  nama                  String    
+  alamat                String
+  jenis_kelamin         String
+  tempat_lahir          String
+  tanggal_lahir         String
+  agama                 String
+  no_tlp                String
+  email                 String @unique
+  kewarganegaraan       String
+  kecamatan             String
+  kabupaten             String
+  nama_ayah             String
+  pekerjaan_ayah        String
+  nama_ibu              String
+  pekerjaan_ibu         String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 
