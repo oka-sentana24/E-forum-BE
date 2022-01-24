@@ -8,9 +8,9 @@ function tokenForUser(user) {
   return jwt.sign({ sub: user.id, iat: timestamp }, secret);
 }
 
-// Create Siswa
-exports.createSiswa = async (req, res, next) => {
-  const { username, password, ...dataSiswa } = req.body;
+// Api Create guru
+exports.createGuru = async (req, res, next) => {
+  const { username, password, ...dataGuru } = req.body;
   try {
     const user = await db.user.create({
       data: {
@@ -18,22 +18,23 @@ exports.createSiswa = async (req, res, next) => {
         password: username,
       },
     });
-    const siswa = await db.siswa.create({
+
+    const guru = await db.guru.create({
       data: {
         id_user: user.id,
         username,
-        ...dataSiswa,
+        ...dataGuru,
       },
     });
-    return res.json({ data: siswa, token: tokenForUser(user) });
+    return res.json({ data: guru, token: tokenForUser(user) });
   } catch (error) {
     console.log(error);
     return res.status(404).send({ error: "cannot create siswa" });
   }
 };
 
-// Get All Siswa
-exports.AllSiswa = async (req, res, next) => {
+// Api Get All guru
+exports.AllGuru = async (req, res, next) => {
   const query = req.query;
   const page = parseInt(query.page) || 1;
   const limit = parseInt(query.limit) || 2;
@@ -41,7 +42,7 @@ exports.AllSiswa = async (req, res, next) => {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
   const result = {};
-  const totalCount = await db.siswa.count();
+  const totalCount = await db.guru.count();
   const totalPage = Math.ceil(totalCount / limit);
   const currentPage = page || 0;
   try {
@@ -55,7 +56,7 @@ exports.AllSiswa = async (req, res, next) => {
         page: page + 1,
         limit: limit,
       };
-      result.paginateData = await db.siswa.findMany({
+      result.paginateData = await db.guru.findMany({
         take: limit,
         skip: startIndex,
         orderBy: {
@@ -74,7 +75,7 @@ exports.AllSiswa = async (req, res, next) => {
         page: page + 1,
         limit: limit,
       };
-      result.paginateData = await db.siswa.findMany({
+      result.paginateData = await db.guru.findMany({
         take: limit,
         skip: startIndex,
         orderBy: {
@@ -93,7 +94,7 @@ exports.AllSiswa = async (req, res, next) => {
         page: page - 1,
         limit: limit,
       };
-      result.paginateData = await db.siswa.findMany({
+      result.paginateData = await db.guru.findMany({
         take: limit,
         skip: startIndex,
         orderBy: {
@@ -112,7 +113,7 @@ exports.AllSiswa = async (req, res, next) => {
         page: totalPage,
         limit: limit,
       };
-      result.paginateData = await db.siswa.findMany({
+      result.paginateData = await db.guru.findMany({
         take: limit,
         skip: startIndex,
         orderBy: {
@@ -132,46 +133,47 @@ exports.AllSiswa = async (req, res, next) => {
   }
 };
 
-//Get Siswa by ID
-exports.idSiswa = async (req, res, next) => {
+//Api Get guru by ID
+exports.idGuru = async (req, res, next) => {
   const { id } = req.body;
-  const siswa = await db.siswa.findFirst({
-    where: {
-      id: id,
-    },
-  });
-  console.dir(siswa);
-  return res.json(siswa);
-};
-
-// Update Siswa
-exports.updateSiswa = async (req, res) => {
-  const { id } = req.params;
-  const dataSiswa = req.body;
   try {
-    const updateSiswa = await db.siswa.update({
-      where: { id: parseInt(id) },
-      data: { ...dataSiswa },
-    });
-    console.dir(updateSiswa);
-    return res.json(updateSiswa);
-  } catch (error) {
-    console.log(error);
-    return res.status(404).send({ error: "siswa tidak ada" });
-  }
-};
-
-// Delete Siswa
-exports.deleteSiswa = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const result = await db.siswa.delete({
+    const result = await db.guru.findUnique({
       where: { id: parseInt(id) },
     });
     console.dir(result);
     return res.json(result);
   } catch (error) {
+    return res.status(404).json(error);
+  }
+};
+
+exports.updateGuru = async (req, res) => {
+  const { id } = req.params;
+  const dataGuru = req.body;
+  console.log(dataGuru);
+  try {
+    const result = await db.guru.update({
+      where: { id: parseInt(id) },
+      data: { ...dataGuru },
+    });
+    console.dir(result);
+    return res.json(result);
+  } catch (error) {
     console.log(error);
-    return res.status(404).send({ error: "cannot delete siswa" });
+    return res.status(404).send({ error: "Guru tidak ada" });
+  }
+};
+
+exports.deleteGuru = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await db.guru.delete({
+      where: { id: id },
+    });
+    console.dir(result);
+    return res.json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(404).send({ error: "Guru tidak ada" });
   }
 };

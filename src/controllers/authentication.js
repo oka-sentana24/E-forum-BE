@@ -9,44 +9,36 @@ function tokenForUser(user) {
   return jwt.sign({ sub: user.id, iat: timestamp }, secret);
 }
 
-exports.signin = function (req, res) {
-  res.send({ token: tokenForUser(req.user) });
-};
+// exports.signin = function (req, res) {
+//   res.send({ token: tokenForUser(req.user) });
+// };
 
-exports.signup = async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
+// exports.signup = async (req, res, next) => {
+//   const email = req.body.email;
+//   const password = req.body.password;
 
-  if (!email || !password) {
-    return res
-      .status(422)
-      .send({ error: "Email and password must be provided" });
-  }
+//   if (!email || !password) {
+//     return res
+//       .status(422)
+//       .send({ error: "Email and password must be provided" });
+//   }
 
-  const existingUser = await db.user.findFirst({
-    where: {
-      email: email,
-    },
-  });
-
-  if (existingUser) {
-    return res.status(422).send({ error: "Email is aleready in use..." });
-  }
-
-  const user = await db.user.create({
-    data: {
-      email,
-      password,
-    },
-  });
-
-  return res.json({ token: tokenForUser(user) });
-};
-
-// exports.read = async (req, res, next) => {
-//   const user = await db.user.findMany({
-//     include: { user: true },
+//   const existingUser = await db.user.findFirst({
+//     where: {
+//       email: email,
+//     },
 //   });
 
-//   console.log(user);
+//   if (existingUser) {
+//     return res.status(422).send({ error: "Email is aleready in use..." });
+//   }
+
+//   const user = await db.user.create({
+//     data: {
+//       email,
+//       password,
+//     },
+//   });
+
+//   return res.json(user{ token: tokenForUser(user) });
 // };
