@@ -13,10 +13,141 @@ generator client {
 
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
+  id          String  @id @default(uuid())
+  username    String  
+  password    String
 }
+
+model Siswa {
+  id                    Int     @id @default(autoincrement())
+  id_user               String
+  id_kelas              String?
+  username              String
+  nama                  String
+  alamat                String
+  jenis_kelamin         String
+  tempat_lahir          String
+  tanggal_lahir         String
+  agama                 String
+  no_tlp                String
+  email                 String @unique
+  kewarganegaraan       String
+  kecamatan             String
+  kabupaten             String
+  nama_ayah             String
+  pekerjaan_ayah        String
+  nama_ibu              String
+  pekerjaan_ibu         String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Guru {
+  id                    Int     @id @default(autoincrement())
+  id_user               String
+  id_kelas              String?
+  username              String
+  nama                  String
+  alamat                String
+  jenis_kelamin         String
+  tempat_lahir          String
+  tanggal_lahir         String
+  agama                 String
+  no_tlp                String
+  email                 String @unique
+  jabatan               String
+  ktp                   String
+  kewarganegaraan       String
+  kecamatan             String
+  kabupaten             String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Kelas {
+  id                    Int     @id @default(autoincrement())
+  nama                  String
+  grade                 String
+  jurusan               String
+  tahun_ajaran          String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Guru_kelas {
+  id                    Int     @id @default(autoincrement())
+  id_kelas              String
+  id_guru               String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Upload {
+  id                    Int     @id @default(autoincrement())
+  url                   String
+  upload_type           String
+  upload_id             String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Posting {
+  id                    Int     @id @default(autoincrement())
+  id_user               String
+  kode_posting          String
+  description           String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Commentar {
+  id                    Int     @id @default(autoincrement())
+  kode_posting          String
+  description           String
+  id_posting            String
+  id_user               String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Chatting {
+  id                    Int     @id @default(autoincrement())
+  nama                  String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Message {
+  id                    Int     @id @default(autoincrement())
+  id_user               String
+  message               String 
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Video_Conference {
+  id               Int     @id @default(autoincrement())
+  Url              String
+  password         String
+  id_user          String 
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Chatting_pengguna {
+  id               Int     @id @default(autoincrement())
+  id_user          String
+  id_chatting      String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+
+
+
+
+
+
 
 
 

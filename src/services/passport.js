@@ -7,14 +7,14 @@ const db = require("../db");
 const { comparePasswords } = require("../utils/password");
 
 // setting local strategy:
-const localOptions = { usernameField: "email" };
+const localOptions = { usernameField: "username" };
 const localLogin = new LocalStrategy(
   localOptions,
-  async (email, password, done) => {
+  async (username, password, done) => {
     const user = await db.user.findFirst({
       where: {
-        email: {
-          equals: email,
+        username: {
+          equals: username,
         },
       },
     });

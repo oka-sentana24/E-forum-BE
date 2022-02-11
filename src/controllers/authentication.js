@@ -9,35 +9,36 @@ function tokenForUser(user) {
 }
 
 exports.signin = function (req, res) {
+  console.log(req);
   res.send({ token: tokenForUser(req.user) });
 };
 
-exports.signup = async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
+// exports.signup = async (req, res, next) => {
+//   const email = req.body.email;
+//   const password = req.body.password;
 
-  if (!email || !password) {
-    return res
-      .status(422)
-      .send({ error: "Email and password must be provided" });
-  }
+//   if (!email || !password) {
+//     return res
+//       .status(422)
+//       .send({ error: "Email and password must be provided" });
+//   }
 
-  const existingUser = await db.user.findFirst({
-    where: {
-      email: email,
-    },
-  });
+//   const existingUser = await db.user.findFirst({
+//     where: {
+//       email: email,
+//     },
+//   });
 
-  if (existingUser) {
-    return res.status(422).send({ error: "Email is aleready in use..." });
-  }
+//   if (existingUser) {
+//     return res.status(422).send({ error: "Email is aleready in use..." });
+//   }
 
-  const user = await db.user.create({
-    data: {
-      email,
-      password,
-    },
-  });
+//   const user = await db.user.create({
+//     data: {
+//       email,
+//       password,
+//     },
+//   });
 
-  return res.json({ token: tokenForUser(user) });
-};
+//   return res.json({ token: tokenForUser(user) });
+// };
