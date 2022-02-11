@@ -1,7 +1,6 @@
 var jwt = require("jsonwebtoken");
 
 const { secret } = require("../config");
-const { siswa } = require("../db");
 const db = require("../db");
 
 function tokenForUser(user) {
@@ -9,9 +8,10 @@ function tokenForUser(user) {
   return jwt.sign({ sub: user.id, iat: timestamp }, secret);
 }
 
-// exports.signin = function (req, res) {
-//   res.send({ token: tokenForUser(req.user) });
-// };
+exports.signin = function (req, res) {
+  console.log(req);
+  res.send({ token: tokenForUser(req.user) });
+};
 
 // exports.signup = async (req, res, next) => {
 //   const email = req.body.email;
@@ -40,5 +40,5 @@ function tokenForUser(user) {
 //     },
 //   });
 
-//   return res.json(user{ token: tokenForUser(user) });
+//   return res.json({ token: tokenForUser(user) });
 // };

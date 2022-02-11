@@ -11,9 +11,12 @@ module.exports = function (app) {
   app.get("/", function (req, res) {
     res.send("Express Server with JWT Authentication");
   });
-  app.get("/user", requireAuth, function (req, res) {
-    res.send({ user: req.user.email.split("@")[0] });
-  });
+  // app.get("/user", requireAuth, function (req, res) {
+  //   res.send({ user: req.user.email.split("@")[0] });
+  // });
+
+  // Login User
+  app.post("/signin", requireSignIn, Authentication.signin);
 
   // EndPoint Siswa
   app.post("/siswa", Siswa.createSiswa);
