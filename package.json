@@ -4,9 +4,10 @@
   "description": "Simple server with JWT authentication",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build": ""
   },
-  "author": "alan2207",
+  "author": "okasentana",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^2.19.0",
