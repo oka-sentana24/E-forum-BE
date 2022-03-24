@@ -1,21 +1,20 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
-
 model User {
   id          String  @id @default(uuid())
   username    String  
   password    String
+  role        Role     @default(USER)
 }
 
 model Siswa {
@@ -142,12 +141,7 @@ model Chatting_pengguna {
   updatedAt DateTime    @updatedAt
 }
 
-
-
-
-
-
-
-
-
-
+enum Role {
+  USER
+  ADMIN
+}
