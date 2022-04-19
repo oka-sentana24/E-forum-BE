@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "build": ""
+    "build": "",
+    "seed": "prisma db push && node prisma/seed/index.js"
   },
   "author": "okasentana",
   "license": "ISC",

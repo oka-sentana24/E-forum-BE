@@ -5,7 +5,7 @@ const db = require("../db");
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
-  return jwt.sign({ sub: user.id, iat: timestamp }, secret);
+  return jwt.sign({ sub: user.id, role: user.role, iat: timestamp }, secret);
 }
 
 exports.signin = function (req, res) {

@@ -1,8 +1,12 @@
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT E'USER',
 
     PRIMARY KEY ("id")
 );
@@ -30,6 +34,7 @@ CREATE TABLE "Siswa" (
     "pekerjaan_ibu" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT,
 
     PRIMARY KEY ("id")
 );
@@ -55,6 +60,7 @@ CREATE TABLE "Guru" (
     "kabupaten" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT,
 
     PRIMARY KEY ("id")
 );
@@ -169,3 +175,9 @@ CREATE UNIQUE INDEX "Siswa.email_unique" ON "Siswa"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Guru.email_unique" ON "Guru"("email");
+
+-- AddForeignKey
+ALTER TABLE "Siswa" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Guru" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

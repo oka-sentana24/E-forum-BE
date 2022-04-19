@@ -36,7 +36,7 @@ exports.createSiswa = async (req, res, next) => {
 exports.AllSiswa = async (req, res, next) => {
   const query = req.query;
   const page = parseInt(query.page) || 1;
-  const limit = parseInt(query.limit) || 2;
+  const limit = parseInt(query.limit) || 1000;
   const last_page = req.query.last_page;
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
@@ -134,11 +134,9 @@ exports.AllSiswa = async (req, res, next) => {
 
 //Get Siswa by ID
 exports.idSiswa = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
   const siswa = await db.siswa.findFirst({
-    where: {
-      id: id,
-    },
+    where: { id: parseInt(id) },
   });
   console.dir(siswa);
   return res.json(siswa);

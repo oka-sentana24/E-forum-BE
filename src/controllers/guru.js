@@ -134,17 +134,25 @@ exports.AllGuru = async (req, res, next) => {
 };
 
 //Api Get guru by ID
+// exports.idGuru = async (req, res, next) => {
+//   const { id } = req.body;
+//   try {
+//     const result = await db.guru.findFirst({
+//       where: { id: parseInt(id) },
+//     });
+//     console.dir(result);
+//     return res.json(result);
+//   } catch (error) {
+//     return res.status(404).json(error);
+//   }
+// };
 exports.idGuru = async (req, res, next) => {
-  const { id } = req.body;
-  try {
-    const result = await db.guru.findUnique({
-      where: { id: parseInt(id) },
-    });
-    console.dir(result);
-    return res.json(result);
-  } catch (error) {
-    return res.status(404).json(error);
-  }
+  const { id } = req.params;
+  const guru = await db.guru.findFirst({
+    where: { id: parseInt(id) },
+  });
+  console.dir(guru);
+  return res.json(guru);
 };
 
 exports.updateGuru = async (req, res) => {
