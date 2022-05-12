@@ -12,20 +12,35 @@ function tokenForUser(user) {
 exports.createSiswa = async (req, res, next) => {
   const { username, password, ...dataSiswa } = req.body;
   try {
-    const user = await db.user.create({
-      data: {
-        username,
-        password: username,
-      },
-    });
+    // const user = await db.user.create({
+    //   data: {
+    //     username,
+    //     password: username,
+    //   },
+    // });
     const siswa = await db.siswa.create({
       data: {
-        id_user: user.id,
         username,
         ...dataSiswa,
+        User:{
+          create:{
+            username,
+            password:username,
+          }
+        },
+        Kelas:{
+          create:{
+            nama:'test',
+            grade:"test",
+            jurusan:"test",
+            tahun_ajaran :"test",
+          }
+        }
       },
     });
-    return res.json({ data: siswa, token: tokenForUser(user) });
+
+    console.log(siswa)
+    return res.json({ data: siswa});
   } catch (error) {
     console.log(error);
     return res.status(404).send({ error: "cannot create siswa" });
