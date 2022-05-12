@@ -1,6 +1,7 @@
 const Authentication = require("./controllers/authentication");
 const Siswa = require("./controllers/siswa");
 const Guru = require("./controllers/guru");
+const Kelas = require("./controllers/kelas");
 const passport = require("passport");
 require("./services/passport");
 
@@ -31,6 +32,17 @@ module.exports = function (app) {
 
   // EndPoint Guru
   app.post("/guru", Guru.createGuru);
+
+  app.get("/guru/page", Guru.AllGuru);
+
+  app.get("/guru/:id", Guru.idGuru);
+
+  app.put("/guru/:id", Guru.updateGuru);
+
+  app.delete("/guru/:id", Guru.deleteGuru);
+
+  // EndPoint Guru
+  app.post("/kelas", Kelas.createKelas);
 
   app.get("/guru/page", Guru.AllGuru);
 

@@ -9,8 +9,9 @@ function tokenForUser(user) {
 }
 
 // Create Siswa
-exports.createSiswa = async (req, res, next) => {
-  const { username, password, ...dataSiswa } = req.body;
+exports.createKelas = async (req, res, next) => {
+    console.log('masuk')
+  const { ...dataKelas } = req.body;
   try {
     // const user = await db.user.create({
     //   data: {
@@ -18,31 +19,14 @@ exports.createSiswa = async (req, res, next) => {
     //     password: username,
     //   },
     // });
-   const kelas= await db.kelas.findFirst({
-      where:{
-        id:4,
-      }
-    })
-    const siswa = await db.siswa.create({
+    const kelas = await db.kelas.create({
       data: {
-        username,
-        ...dataSiswa,
-        User:{
-          create:{
-            username,
-            password:username,
-          }
-        },
-        Kelas:{
-         connect:{
-           id:kelas.id
-         }
-        }
+        ...dataKelas
       },
     });
 
-    console.log(siswa)
-    return res.json({ data: siswa});
+    console.log(kelas)
+    return res.json({ data: kelas});
   } catch (error) {
     console.log(error);
     return res.status(404).send({ error: "cannot create siswa" });
